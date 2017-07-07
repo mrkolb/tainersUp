@@ -1,0 +1,43 @@
+{% extends "results.html" %}
+{% block body %}
+<h3><span class="mw-headline" id="container_access">container access</span></h3>
+
+
+<ul>
+<li><b>Shell into running container</b></li>
+</ul>
+<pre>docker attach container_name
+You can detach from a container and leave it running using the CTRL-p CTRL-q key sequence
+If it won&#39;t unattach kill process for attach
+</pre>
+<ul>
+<li><b>alternative shell method</b>
+<ul>
+<li><b>The docker exec command allows you to run commands inside a Docker container.</b></li>
+</ul></li>
+</ul>
+<pre>$ docker exec -it container_name bash
+</pre>
+
+<ul>
+<li><b>You can copy files,cmds,etc. from the container to the filesystem and back</b></li>
+</ul>
+<pre>$ docker cp -L ghost:/usr/src/ghost/config.js ./config.js
+$ cp ./config.js /var/lib/ghost/config.js
+</pre>
+<ul>
+<li><b>You can mount a filesystem on a container to your host</b></li>
+</ul>
+<pre>$ docker run -v "hostFileSystem":"ContainerFileSystem" "containerName"
+$ docker run -v /home/test:/usr/test unbuntu
+</pre>
+<ul>
+<li><b>Start vs Run docker commands</b></li>
+</ul>
+<pre>docker run -d image_name -p 80:2368 container_name - Spinup a new container detached and with port mapping
+docker stop container_name
+docker start container_name - Start one or more stopped containers
+
+</pre>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }}tainersUp</title>
+    {% else %}
+    <title>tainersUp</title>
+
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/style_login.css" type="text/css">
+  </head>
+  <body>
+    <div style="text-align: center">
+      <img src="{{url_for('static', filename='images/logo.png')}}" />
+      <br />
+      <br>
+    <span style="font-size: 18px; background:black; color:white"><b><i>&nbsp;tainers</i></b></span><span style="font-size: 18px; background:black; color:#EE82EE"><b><i>Up&nbsp;&#9658;</i></b></span> Container Technology Tool<!--<a href='logout'>Logout</a></div> -->
+    </div>
+    <hr>
+    {% endif %}
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li align="center">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block body %}{% endblock %}
+  </body>
+</html>

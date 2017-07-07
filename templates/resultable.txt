@@ -1,0 +1,9 @@
+CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS                     PORTS               NAMES
+fe328797b774        busybox                    "sh"                     2 hours ago         Up 40 minutes                                  loving_kalam
+9803c80789ab        arangodb/arangodb:3.1.23   "/entrypoint.sh ar..."   11 days ago         Exited (0) 10 days ago                         zen_varahamihira
+fdb0e28d38a8        arangodb/arangodb:3.1.23   "/entrypoint.sh ar..."   11 days ago         Exited (1) 11 days ago                         compassionate_torvalds
+63480f481456        7d6c4fc7264b               "/bin/sh -c 'apt-g..."   11 days ago         Exited (8) 11 days ago                         flamboyant_ride
+7d8fc7559534        arangodb/arangodb:3.1.23   "/entrypoint.sh ar..."   11 days ago         Exited (1) 11 days ago                         objective_rosalind
+9c4b139e887a        ubuntu                     "/bin/sh -c 'while..."   5 weeks ago         Exited (137) 5 weeks ago                       condescending_fermi
+57c9ce6d128e        ghost_ghost                "docker-entrypoint..."   2 months ago        Exited (137) 2 hours ago                       ghost
+b09bd208eb2d        mysql                      "docker-entrypoint..."   2 months ago        Exited (0) 2 hours ago                         mysql

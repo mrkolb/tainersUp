@@ -1,0 +1,3 @@
+# .gitignore for python virtualenv and compiled code
+*.pyc
+flask

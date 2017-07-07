@@ -1,0 +1,300 @@
+{% extends "results.html" %}
+{% block body %}
+<h2>docker-machine command</h2>
+<p>
+
+<table width="100%" cellpadding="10">
+  <tr>
+    <td>
+      <ul>
+        <li>
+          "docker-machine works to install a "stack" for an application to be deployed across "nodes".  These
+          nodes can be on one host or spread across multiple hosts.
+        </li>
+        <li>
+          “docker-machine” commands communicate with nodes across hosts with the docker daemon (a.k.a Docker Engine)
+        </li>
+        <li>
+          A swarm is a cluster of Docker engines, or nodes, where you construct service infrastructure.
+          It is made up of a Mgmt node and a number of worker nodes.
+        </li>
+        <li>
+          Services (i.e. DatabaseB, Web, LoadBalancer) are grouped together to deploy an application to.
+        </li>
+        <li>
+          "docker stack"  command is used to deploy applications to the swarm.
+        </li>
+        <li>
+          Commands must be run from the Management Node.
+        </li>
+      </ul>
+    </p>
+    <br />
+    <img src="{{url_for('static', filename='images/dkrSwarm.jpg')}}" />
+    <hr />
+    <p>
+    <ul>
+      <li><a href="https://docs.docker.com/engine/swarm">docker-compose getting started</a></li>
+    </ul>
+    <ul>
+      <li><a href="https://docs.docker.com/engine/reference/commandline/swarm/">docker-compose overview</a></li>
+    </ul>
+    <ul>
+      <li><a href="https://docs.docker.com/docker-cloud/apps/stack-yaml-reference/">docker-stack.yml reference</a></li>
+    </ul>
+    </td>
+    <td>
+    <img src="{{url_for('static', filename='images/DockerMachine.png')}}" />
+    </td>
+  </tr>
+</table>
+</p>
+<hr />
+<h4>The Docker tutorial is great way to better understand this technology.  Abbreviated notes for the tutorial are below
+to execute the lifecycle in swarm.</h4>
+<p><a class="external text" href="https://docs.docker.com/engine/getstarted-voting-app/" rel="nofollow">creating application service on Docker</a> - Using Swarm</p>
+
+<ul>
+<li>Use docker machine to create multiple virtual local hosts or dockerized cloud servers</li>
+<li>Use docker commands to set up and run a swarm with manager and worker nodes</li>
+<li>Deploy the vote app services across the two nodes by feeding our example docker-stack.yml file to the docker stack deploy command</li>
+<li>Test the app by voting for cats and dogs, and view the results</li>
+<li>Use the visualizer to explore and understand the runtime app and services</li>
+<li>Update the docker-stack.yml and redeploy the app using a different vote image to implement a poll on different choices</li>
+<li>Use features new in Compose Version 3, highlighted in the sample app</li>
+</ul>
+<table id="toc" class="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<ul>
+<li class="toclevel-1"><a href="#Tutorial">Tutorial</a>
+<ul>
+<li class="toclevel-2"><a href="#create_environment">create environment</a>
+</li>
+<li class="toclevel-2"><a href="#create_swarm">create swarm</a>
+</li>
+<li class="toclevel-2"><a href="#deploy_the_vote_app">deploy the vote app</a>
+</li>
+<li class="toclevel-2"><a href="#App_test_drive">App test drive</a>
+</li>
+<li class="toclevel-2"><a href="#Graceful_Stop_.2F_Start_.2F_Shutdown">Graceful Stop / Start / Shutdown</a>
+</li>
+</ul>
+</li>
+</ul>
+</ul></td></tr></table><hr/>
+<h2><span class="mw-headline" id="Tutorial">Tutorial</span></h2>
+
+
+<ol>
+<li>create docker-stack.yml &#60;== compose version 3</li>
+</ol>
+<pre>
+version: &#34;3&#34;
+services:
+
+  redis:
+    image: redis:alpine
+    ports:
+      - &#34;6379&#34;
+    networks:
+      - frontend
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  db:
+    image: postgres:9.4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+  vote:
+    image: dockersamples/examplevotingapp_vote:before
+    ports:
+      - 5000:80
+    networks:
+      - frontend
+    depends_on:
+      - redis
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+  result:
+    image: dockersamples/examplevotingapp_result:before
+    ports:
+      - 5001:80
+    networks:
+      - backend
+    depends_on:
+      - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=VOTING]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints: [node.role == manager]
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - &#34;8080:8080&#34;
+    stop_grace_period: 1m30s
+    volumes:
+      - &#34;/var/run/docker.sock:/var/run/docker.sock&#34;
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
+</pre>
+
+<h3><span class="mw-headline" id="create_environment">create environment</span></h3>
+
+
+<ol>
+<li>docker-machine create --driver virtualbox manager</li>
+<li>docker-machine create --driver virtualbox worker</li>
+<li>docker-machine ls  &#60;== list machines running with IP</li>
+<li>docker-machine ip manager &#60;== get ip for machine &#34;manager&#34;</li>
+</ol>
+
+<p><b>Interacting with Docker machines</b>
+</p>
+<ol>
+<li>docker-machine env manager &#60;== gets environmental variables for machine &#34;manager</li>
+<li>eval $(docker-machine env manager) &#60;== sets shell to that machines variable and is connected.</li>
+<li>docker-machine ls &#60;== will show asterisk next to machine shell is set to.</li>
+</ol>
+
+
+<ol>
+<li>An alternative method for ssh to machine is to use
+<ol>
+<li>docker-machine ssh manager  &#60;== this ssh to &#34;manager&#34; machine</li>
+</ol></li>
+</ol>
+
+<h3><span class="mw-headline" id="create_swarm">create swarm</span></h3>
+
+
+<ol>
+<li>docker-machine ssh manager</li>
+<li>docker-machine ls &#60;==get manager IP address</li>
+<li>docker swarm init --advertise-addr &#60;MANAGER-IP&#62;  &#60;== run on ssh shell to the manager
+
+<ol>
+<li>With token taken from the swarm init function run on ssh shell to worker
+<dl>
+<dd>docker@worker:~$ docker swarm join \</dd>
+<dd>&#62;     --token SWMTKN-1-144pfsupfo25h43zzr6b6bghjson8uedxjsndo5vuehqlyarsk-9k4q84axm008whv9zl4a8m8ct \</dd>
+</dl></li>
+</ol>
+<dl>
+<dd>&#62;     192.168.99.100:2377</dd>
+</dl></li>
+<li>on &#34;Manager&#34; docker node ls &#60;== to see all machines in swarm.</li>
+</ol>
+
+<h3><span class="mw-headline" id="deploy_the_vote_app">deploy the vote app</span></h3>
+<p>The docker-stack.yml file must be located on a manager for the swarm where you want to deploy the application stack.</p>
+
+<ol>
+<li>In manager ssh shell</li>
+<li>curl -o docker-stack.yml <a class="external free" href="https://raw.githubusercontent.com/docker/example-voting-app/master/docker-stack.yml" rel="nofollow">https://raw.githubusercontent.com/docker/example-voting-app/master/docker-stack.yml</a></li>
+<li>Deploy vote app</li>
+<li>docker stack deploy --compose-file docker-stack.yml vote</li>
+<li>docker stack services vote  &#60;== check deployment</li>
+</ol>
+
+<h3><span class="mw-headline" id="App_test_drive">App test drive</span></h3>
+
+<ol>
+<li><a class="external free" href="http://192.168.99.100:5000" rel="nofollow">http://192.168.99.100:5000</a>  &#60;== opens vote app</li>
+<li><a class="external free" href="http://192.168.99.101:5001" rel="nofollow">http://192.168.99.101:5001</a>  &#60;== opens vote results
+<dl>
+<dd></dd>
+</dl></li>
+<li><a class="external free" href="http://192.168.99.100:8080" rel="nofollow">http://192.168.99.100:8080</a>  &#60;== application visualizer
+<dl>
+<dd>This will show you the result of your deployment strategy</dd>
+<dd>constraints: {node:role == manager]  &#60;== pins to the manager node</dd>
+<dd>replicas: 2  &#60;== deploy to two nodes</dd>
+</dl></li>
+</ol>
+
+
+<ol>
+<li>To redeploy after modifying yml</li>
+<li>docker stack deploy --compose-file docker-stack.yml vote</li>
+</ol>
+
+<h3><span class="mw-headline" id="Graceful_Stop_.2F_Start_.2F_Shutdown">Graceful Stop / Start / Shutdown</span></h3>
+
+
+<ol>
+<li>From shell &#34;docker-machine ls&#34;</li>
+</ol>
+<p><b>Stop machines</b>
+</p>
+<ol>
+<li>docker-machine stop worker</li>
+<li>docker-machine stop manager &#60;== You want to stop the manager node last.</li>
+</ol>
+<p><b>Start machines</b>
+</p>
+<ol>
+<li>docker-machine start manager</li>
+<li>docker-machine start worker</li>
+</ol>
+
+
+<ol>
+<li>docker-machine ssh manager &#60;==to see if swarm is good.</li>
+<li>docker stack service vote &#60;==chekc swarm deployment</li>
+</ol>
+<p><b>Remove local machines</b>
+</p>
+<ol>
+<li>docker-machine rm worker</li>
+<li>docker-machine rm manager</li>
+</ol>
+
+
+{% endblock %}}

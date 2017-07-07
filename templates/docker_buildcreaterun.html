@@ -1,0 +1,68 @@
+{% extends "results.html" %}
+{% block body %}
+
+<h2>docker build / create / run / WTF</h2>
+<p>
+  Learning docker it may help to understand the difference between these commands.  There is a hierarchy to their usage
+  that brings you from a raw image to a working container.<br />
+  <a href="https://docs.docker.com/engine/reference/commandline/docker/">docker Command Reference</a>
+</p>
+</div>
+<hr/>
+<li>
+  docker build -t arangodb .
+</li>
+<pre>
+  This builds the image named arangodb from the information in Dockerfile
+</pre>
+<li>
+  docker create -t -i fedora bash
+</li>
+<pre>
+  The docker create command creates a writeable container layer over the specified image and prepares it for running the specified command.
+  The container ID is then printed to STDOUT.
+</pre>
+<li>
+  docker start -a -i <container_id>
+</li>
+<pre>
+  You can then use the docker start <container_id> command to start the container at any point.
+</pre>
+<li>
+  docker run --name test -d debian
+</li>
+<pre>
+  docker run creates AND starts the writeable container named "test" from the debian image and detachs so the container runs in the background.
+</pre>
+<hr/>
+<h2>docker-compose "Building a system from the command line"</h2>
+<p>
+  The docker-compose command pulls together containers into a system that performs some function.  It reads the
+  default file docker-compose.yml or an alternative.
+  <li>
+    <a href="https://docs.docker.com/compose/reference/overview/">docker-compose Command Reference</a>
+  </li>
+  <li>
+    <a href="https://docs.docker.com/engine/swarm/key-concepts/">docker swarm Key Concepts</a>
+  </li>
+</p>
+<li>
+  docker-compose build
+</li>
+<pre>
+  This builds the containers defined in the docker-compose.yml file but does not start them.
+</pre>
+<li>
+  docker-compose up
+</li>
+<pre>
+  This builds the containers defined in the docker-compose.yml and starts them up.
+</pre>
+<li>
+  docker-compose up --build
+</li>
+<pre>
+  The --build switch forces a rebuild of the images supporting the containers and then containers are created and started.
+</pre>
+
+{% endblock %}}

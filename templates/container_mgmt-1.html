@@ -1,0 +1,31 @@
+{% extends "results.html" %}
+{% block body %}
+<div align="center">
+<h3>Image & Container mgmt</h3>
+</div>
+
+<table width="100%" style="border: 1px solid black; text-align: center">
+  <tr style="border: 1px solid black">
+      <th style="text-align: center">
+      Image Mgmt
+    </th>
+      <th style="text-align: center">
+      Container Mgmt
+    </th>
+
+  </tr>
+  <tr>
+    <td>
+      Search Docker HUB for images
+      <form action="/dockerimagesearch" method="POST">
+          <input type="text" name="imagetag" value="imagetag">
+          <input type="submit" value="Submit">
+      </form>
+    </td>
+    <td>
+      container start
+    </td>
+  </tr>
+</table>
+
+{% endblock %}

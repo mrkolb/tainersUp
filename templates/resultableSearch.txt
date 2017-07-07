@@ -1,0 +1,7 @@
+Using default tag: latest
+latest: Pulling from library/busybox
+27144aa8f1b9: Pulling fs layer
+27144aa8f1b9: Download complete
+27144aa8f1b9: Pull complete
+Digest: sha256:be3c11fdba7cfe299214e46edc642e09514dbb9bbefcd0d3836c05a1e0cd0642
+Status: Downloaded newer image for busybox:latest

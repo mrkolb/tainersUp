@@ -1,0 +1,49 @@
+{% extends "results.html" %}{% block body %}<pre><h2>Docker Installation Cfg</h2><h3>cmd = <b>docker info</b></h3>Containers: 8
+ Running: 1
+ Paused: 0
+ Stopped: 7
+Images: 47
+Server Version: 17.06.0-ce
+Storage Driver: overlay2
+ Backing Filesystem: extfs
+ Supports d_type: true
+ Native Overlay Diff: true
+Logging Driver: json-file
+Cgroup Driver: cgroupfs
+Plugins: 
+ Volume: local
+ Network: bridge host ipvlan macvlan null overlay
+ Log: awslogs fluentd gcplogs gelf journald json-file logentries splunk syslog
+Swarm: inactive
+Runtimes: runc
+Default Runtime: runc
+Init Binary: docker-init
+containerd version: cfb82a876ecc11b5ca0977d1733adbe58599088a
+runc version: 2d41c047c83e09a6d61d464906feb2a2f3c52aa4
+init version: 949e6fa
+Security Options:
+ seccomp
+  Profile: default
+Kernel Version: 4.9.31-moby
+Operating System: Alpine Linux v3.5
+OSType: linux
+Architecture: x86_64
+CPUs: 2
+Total Memory: 1.952GiB
+Name: moby
+ID: HIOH:4EGX:UOT5:RVIL:3VBB:A2TY:SJ43:CLX3:KUUY:3LZO:5PGU:NRYH
+Docker Root Dir: /var/lib/docker
+Debug Mode (client): false
+Debug Mode (server): true
+ File Descriptors: 24
+ Goroutines: 34
+ System Time: 2017-07-02T23:01:09.313584389Z
+ EventsListeners: 1
+No Proxy: *.local, 169.254/16
+Registry: https://index.docker.io/v1/
+Experimental: true
+Insecure Registries:
+ 127.0.0.0/8
+Live Restore Enabled: false
+
+</pre> {% endblock %}}

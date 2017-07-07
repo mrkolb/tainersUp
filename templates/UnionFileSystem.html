@@ -1,0 +1,31 @@
+{% extends "results.html" %}
+{% block body %}
+<h3><span class="mw-headline" id="container_access">Union File System</span></h3>
+<div>
+  <p>
+    When a container has booted, it is moved into memory, and the boot filesystem is unmounted to free up
+    the RAM used by the initrd disk image. Docker next layers a root filesystem, rootfs, on top of the boot
+    filesystem. This rootfs can be one or more operating systems (e.g., a Debian or Ubuntu filesystem).
+  </p>
+  <p>
+    Docker calls each of these filesystems "images". Images can be layered on top of one another.  When a
+    container is launched from an image, Docker mounts a read-write filesystem on top of all layers.
+    This is where whatever processes we want our Docker container to run will execute. When Docker first
+    starts a container, the initial read-write layer is empty. All changes are applied to this layer.
+  </p>
+  <p>
+    Example:<br />
+
+    If you want to change a file, then that file will be copied from the read-only layer
+    below into the read-write layer. The read-only version of the file will still exist but is now hidden
+    underneath the copy.
+  </p>
+</div>
+<br />
+<img src="{{url_for('static', filename='images/UnionFileSystem.jpg')}}" />
+
+
+
+
+
+{% endblock %}

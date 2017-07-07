@@ -1,0 +1,42 @@
+{% extends "results.html" %}
+{% block body %}
+<h3><span class="mw-headline" id="container_access">Volume Mgmt</span></h3>
+<p>
+  Docker has a variety of different approaches for data storage.  Each has their drawbacks so you decide.
+  <ul>
+    <b>Storage in a container</b>
+  </ul>
+  <pre>
+    Storage in a container is quick and dirty however when you delete the container the data is lost.
+  </pre>
+  <ul>
+    <b>Storage to a volume</b>
+  </ul>
+  <pre>
+    Stores to the host disk for persistence however you are now tied to that host so portability suffers.
+    A volume is subdirectory in a container’s file system that exists outside of the union file system.
+  </pre>
+  <ul>
+    <b>Storage to a container volume</b>
+  </ul>
+  <pre>
+    Volume containers are better but backups to the host disk still need to be considered.
+  </pre>
+  <ul>
+    <b>Storage to NAS, NFS, etc. with volume plugin</b>
+  </ul>
+  <pre>
+    Vendor plugins allow for integration into your network storage environment with all of it's benefits.
+    Your also exposed to all the vendor issues we know and love.
+  </pre>
+</p>
+<hr />
+<p>
+  <h4>Docker Plugin Architecture</h4>
+  <img src="{{url_for('static', filename='images/volumePlugin.jpg')}}" />
+</p>
+
+
+
+
+{% endblock %}

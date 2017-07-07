@@ -1,0 +1,23 @@
+Using default tag: latest
+latest: Pulling from library/ubuntu
+75c416ea735c: Pulling fs layer
+c6ff40b6d658: Pulling fs layer
+a7050fc1f338: Pulling fs layer
+f0ffb5cf6ba9: Pulling fs layer
+be232718519c: Pulling fs layer
+f0ffb5cf6ba9: Waiting
+be232718519c: Waiting
+c6ff40b6d658: Verifying Checksum
+c6ff40b6d658: Download complete
+a7050fc1f338: Download complete
+be232718519c: Verifying Checksum
+be232718519c: Download complete
+f0ffb5cf6ba9: Download complete
+75c416ea735c: Download complete
+75c416ea735c: Pull complete
+c6ff40b6d658: Pull complete
+a7050fc1f338: Pull complete
+f0ffb5cf6ba9: Pull complete
+be232718519c: Pull complete
+Digest: sha256:a0ee7647e24c8494f1cf6b94f1a3cd127f423268293c25d924fbe18fd82db5a4
+Status: Downloaded newer image for ubuntu:latest

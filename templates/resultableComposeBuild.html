@@ -1,0 +1,10 @@
+{% extends "results.html" %}{% block body %}<pre><h2>Docker Compose Build </h2><h3>cmd = <b>docker-compose -f /Users/mkolb/docker/ghost/docker-compose.yml build --no-cache</b></h3>mysql uses an image, skipping
+Building ghost
+Step 1/2 : FROM ghost_ghost
+ ---> 4105581f049d
+Step 2/2 : COPY ./config.js /var/lib/ghost/config.js
+ ---> db651d7b2889
+Removing intermediate container 2c7dbeada64a
+Successfully built db651d7b2889
+Successfully tagged ghost_ghost:latest
+</pre> {% endblock %}}

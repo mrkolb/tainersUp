@@ -1,0 +1,34 @@
+{% extends "results.html" %}
+{% block body %}
+<h2>docker-compose command</h2>
+<p>
+<h4>
+  <ul>
+    <li>
+      docker-compose v3 – needed to be compatible with swarm
+    </li>
+    <li>
+      <i>docker-compose</i> commands sets up multiple containers to host an application (e.g.  mysql db/ php middleware/apache presentation.)
+    </li>
+    <li>
+     <i>docker-compose</i> references the default file "docker-compose.yml" to build out and run the application infrastructure.
+    </li>
+  </ul>
+</p>
+<br />
+<p>
+  <img src="{{url_for('static', filename='images/composeYML.jpg')}}" />
+</p>
+<p>
+<ul>
+  <li><a href="https://docs.docker.com/compose/gettingstarted/">docker-compose getting started</a></li>
+</ul>
+<ul>
+  <li><a href="https://docs.docker.com/compose/reference/overview/">docker-compose overview</a></li>
+</ul>
+<ul>
+  <li><a href="https://docs.docker.com/compose/compose-file/">docker-compose.yml reference</a></li>
+</ul>
+</p>
+
+{% endblock %}}

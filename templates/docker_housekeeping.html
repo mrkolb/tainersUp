@@ -1,0 +1,133 @@
+{% extends "results.html" %}
+{% block body %}
+<table id="toc" class="toc" summary="Contents">
+<tr>
+<td>
+<div id="toctitle">
+<h2>Docker housekeeping</h2>
+</div>
+<ul>
+<ul>
+<li class="toclevel-1"><a href="#cleanup_commands">cleanup commands</a>
+<ul>
+<li class="toclevel-2"><a href="#cleanup_aliases">Useful cleanup aliases</a>
+</li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#keeping_disk_usage_to_a_minimum">Keeping disk usage to a minimum</a>
+<ul>
+<li class="toclevel-2"><a href="#How_docker_stores_files:">How docker stores files:</a>
+</li>
+</ul>
+</li>
+</ul>
+</ul></td></tr></table><hr/>
+<p>
+  <h3>Location of docker images</h3></p>
+  <li>
+    <b>OS X</b>
+  </li>
+  <pre>$HOME/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/Docker.qcow2
+       qcow is a file format for disk image files used by QEMU, a hosted virtual machine monitor.
+       It stands for "QEMU Copy On Write" and uses a disk storage optimization strategy that delays
+       allocation of storage until it is actually needed
+  </pre>
+  <li>
+    <b>Linux</b>
+  </li>
+  <pre>
+The contents of the /var/lib/docker directory vary depending on the driver Docker is using for storage.
+By default this will be aufs.  RedHat chose devicemapper as thier driver.
+
+You can manually set the storage driver with the -s or --storage-driver= option to the Docker daemon.
+
+In the case of aufs:
+
+/var/lib/docker/aufs/diff/<id> has the file contents of the images.
+/var/lib/docker/repositories-aufs is a JSON file containing local image information. This can be viewed with the command docker images.
+
+In the case of devicemapper:
+
+/var/lib/docker/devicemapper/devicemapper/data stores the images
+/var/lib/docker/devicemapper/devicemapper/metadata the metadata
+
+  </pre>
+</p>
+<h3><span class="mw-headline" id="cleanup_commands">cleanup commands</span></h3>
+<p>
+
+<p><b>Delete one image</b></p>
+<pre>docker images &#60;==to get repository/image_name
+docker rmi -f repository/image_name
+</pre>
+<p><b>Kill all running containers</b></p>
+<pre>docker kill $(docker ps -q)
+</pre>
+<p><b>Delete all stopped containers</b> (including data-only containers)</p>
+<pre>docker rm $(docker ps -a -q)
+</pre>
+<p><b>Delete all &#39;untagged/dangling</b>&#39; (&#60;none&#62;) images</p>
+<pre>docker rmi $(docker images -q -f dangling=true)
+</pre>
+<p><b>Delete ALL images</b></p>
+<pre>docker rmi $(docker images -q)
+</pre>
+<p><b>docker volume mgmt</b>
+ - Pre docker 1.9</p>
+<pre>docker volume ls -qf dangling=true | xargs -r docker volume rm
+</pre>
+<p>
+  <b>Docker volume mgmt > 1.9</b>
+<pre>
+docker volume prune
+</pre>
+</p>
+<h3><span class="mw-headline" id="cleanup_aliases">cleanup aliases</span></h3>
+<pre>
+# ~/.bash_aliases
+
+# Kill all running containers.
+alias dkrkillall=&#39;docker kill $(docker ps -q)&#39;
+
+# Delete all stopped containers.
+alias dkrdelc=&#39;printf &#34;\n&gt;&gt;&gt; Deleting stopped containers\n\n&#34; &#38;&#38; docker rm $(docker ps -a -q)&#39;
+
+# Delete all untagged images.
+alias dkrdeli=&#39;printf &#34;\n&gt;&gt;&gt; Deleting untagged images\n\n&#34; &#38;&#38; docker rmi $(docker images -q -f dangling=true)&#39;
+
+# Delete all stopped containers and untagged images.
+alias dkrclean=&#39;dkrdelc || true &#38;&#38; dkrdeli&#39;
+</pre>
+
+<h3><span class="mw-headline" id="keeping_disk_usage_to_a_minimum">Keeping disk usage to a minimum</span></h3>
+
+<p>Most docker commands leave a disk trace behind, make a copy of something or replace an item without removing the previous version. Let’s take a look at the most common ones:</p>
+<p>docker pull and docker build create new docker images. Each layer is cached and uses aufs, so it decreases disk usage by itself, but it’s also leaving previous versions / layers dangling.</p>
+<p>You can remove untagged images by running:</p>
+
+<ol>
+<li>OS X users: your version of xargs won’t have the -r switch</li>
+<li>so just skip it (you may encounter an error if there are no</li>
+<li>images to clean up)</li>
+</ol>
+
+<pre>docker images --no-trunc | grep &#39;&#60;none&#62;&#39; | awk &#39;{ print $3 }&#39; \
+   | xargs -r docker rmi
+</pre>
+<p>docker run leaves the container by default. This is convenient if you’d like to review the process later -- look at the logs or exit status. This also stores the aufs filesystem changes, so you can commit the container as a new image.</p>
+<p>This can be expensive in terms of disk space usage, especially during testing. <b>Remember to use docker run --rm flag if you don’t need to inspect the container later</b>. This flag doesn’t work with background containers (-d), so you’ll be left with finished containers anyway. Clean up dead and exited containers using command:</p>
+<pre>docker ps --filter status=dead --filter status=exited -aq \
+ | xargs docker rm -v
+</pre>
+<p>docker rm does not remove the volumes created by the container. You need to use the -v flag to remove the volumes along the container.</p>
+<p><h3><span class="mw-headline" id="How_docker_stores_files:">Docker filesystem storage and volumes</span></h3></p>
+
+
+<p>By default, everything you save to disk inside the container is saved in the aufs layer. Clean up unused containers and images will take care of this.</p>
+<p>If you mount a file or directory from the host (using docker run -v /host/path:/container/path …) the files are stored in the host filesystem, so it’s easy to track them down.</p>
+<p>A third way is using docker volumes. Those are special paths that are mapped to a special directory in /var/lib/docker/volumes/ path on the host. A lot of images use volumes to share files between containers (using the volumes-from option) or persist data so you won’t lose them after the process exits (the data-only containers pattern).
+<p>
+A named volume referencing a volume plugin to vendor network storage rounds out the options.
+</p>
+
+{% endblock %}}

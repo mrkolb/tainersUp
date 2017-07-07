@@ -1,0 +1,54 @@
+{% extends "results.html" %}
+{% block body %}
+<h2>What is Docker?</h2>
+<p>
+  <h4>A docker container differs from a virtual machine.  It makes system calls to the base server installation
+  which makes it light wieght compared to a VM.  This allows for a densely packed host and quicker cycling
+  compared to a VM.</h4>
+  <div>
+    <img src="{{url_for('static', filename='images/container.jpg')}}" />
+  </div>
+  <br />
+  <table width="100%">
+    <tr>
+      <td>
+        <h4>The daemons that control docker are structured this way:</h4>
+        <br />
+        <div>
+          <img src="{{url_for('static', filename='images/dkrEngine.jpg')}}" />
+        </div>
+      </td>
+      <td align="left" valign="top">
+        <h4><i>“docker”</i> commands communicate with the docker daemon (a.k.a Docker Engine) to manage containers.</h4>
+        <br />
+        <div style="padding: 15px;">
+          <p>
+            <b>runC</b>, a standalone containers runtime that allows you to spin containers, interact with them, and manage their lifecycle and that's why containers built with one engine (like Docker) can run on another engine.
+            <br />
+            <p>
+            Containers are started as a child process of runC and can be embedded into various other systems without having to run a daemon (Docker Daemon).
+            runC is built on libcontainer which is the same container library powering a Docker engine installation. Docker architecture is broken into <b>four components: Docker engine, containerd, containerd-shm and runC.</b> The binaries are respectively called docker, docker-containerd, docker-containerd-shim, and docker-runc.
+            </p>
+            <br />
+            To run a container, Docker engine creates the image, pass it to containerd. containerd calls containerd-shim that uses runC to run the container. Then, <b>containerd-shim allows the runtime (runC in this case) to exit after it starts the container.</b>
+          </p>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <br />
+<h4>"docker cmd"</h4>
+<ul>
+  <li><a href="https://docs.docker.com/engine/reference/commandline/run/">docker cmd CLI</a></li>
+</ul>
+<h4>"A DockerFile is used to define how the container is built.  The default name is <i>"DockerFile"</i>"</h4>
+<ul>
+  <li><a href="https://docs.docker.com/engine/reference/builder/">DockerFile reference</a></li>
+</ul>
+<h4>Configuration files for docker, docker-compose and docker-swarm</h4>
+<ul>
+  <img src="{{url_for('static', filename='images/dockerConfig.jpg')}}" />
+</ul>
+</p>
+
+{% endblock %}}
