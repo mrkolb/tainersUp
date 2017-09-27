@@ -150,6 +150,13 @@ def dkhousekeeping():
     else:
         return render_template('login.html')
 
+@app.route("/dockerbackups")
+def dkbackups():
+    if session.get('logged_in'):
+        return render_template('docker_backups.html')
+    else:
+        return render_template('login.html')
+
 @app.route("/dockeraccess")
 def dkaccess():
     if session.get('logged_in'):

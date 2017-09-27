@@ -1,0 +1,30 @@
+{% extends "results.html" %}
+{% block body %}
+<h2>Docker backups</h2>
+<hr/>
+<p>
+  <h3>How to backup database data</h3><br />
+  Note:  docker DB container must be up</p>
+  <li>
+    <b>MariaDB / MySQL dump</b>
+  </li>
+  <pre>
+    Command:
+    docker exec $CONTAINER_ID_DB  sh -c 'exec mysqldump --all-databases -uroot -p$ROOT_PWD' > $DBNAME.sql
+
+    Example:
+    docker exec ef66d921f253  sh -c 'exec mysqldump --all-databases -uroot -prootpwd' > WLWiki.sql
+  </pre>
+  <li>
+    <b>MariaDB / MySQL restore</b>
+  </li>
+  <pre>
+    Command:
+    cat $DBNAME.sql | docker exec -i $CONTAINER_ID_DB /usr/bin/mysql -u root --password=$ROOT_PWD $DB_NAME
+
+    Example:
+    cat WLWiki.sql | docker exec -i f3ef1e954097 /usr/bin/mysql -u root --password=rootpwd mydb
+  </pre>
+</p>
+
+{% endblock %}}
