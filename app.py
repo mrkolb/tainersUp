@@ -52,6 +52,20 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
 
+@app.route("/tcpport")
+def osport():
+    if session.get('logged_in'):
+        output = subprocess.check_output('lsof -i -n -P | grep TCP | tee templates/resultableInfo.txt', shell=True,stderr=subprocess.STDOUT,)
+        output = "<h3>cmd = <b>lsof -i -n -P | grep TCP</b></h3>" + output
+        output = "<h2>OS listening ports</h2>" + output
+        output = "{% extends \"results.html\" %}{% block body %}<pre>" + output
+        output = output + "</pre> {% endblock %}}"
+        f = open('templates/resultableInfo.html', 'w')
+        f.write(output)
+        f.close()
+        return render_template('resultableInfo.html')
+    else:
+        return render_template('login.html')
 
 @app.route("/dockerinfo")
 def dkinfo():
