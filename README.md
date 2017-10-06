@@ -10,6 +10,7 @@ Dependencies:
 * Tested on OS X EL Capitan - 10.11.4
 * Flask framework for web presentation.
 * Tested against Docker Version: 17.06.0-ce
+* jq utility for certain docker inspection functions
 
 Scope:  docker and docker-compose usage
 
