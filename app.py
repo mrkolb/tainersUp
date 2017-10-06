@@ -500,15 +500,101 @@ def dkcontainerlogs():
     else:
         return render_template('login.html')
 
+@app.route('/dockerContainerStats', methods=['POST'])
+def dkcontainerstats():
+    if session.get('logged_in'):
+        try:
+            POST_CONTAINERNAME = str(request.form['containerStats'])
+            outputScript = "docker stats --no-stream " + POST_CONTAINERNAME + " | tee templates/resultableStats.txt"
+            output = subprocess.check_output(outputScript, shell=True,stderr=subprocess.STDOUT,)
+            for i in range(1,3):
+                output1 = subprocess.check_output(outputScript, shell=True,stderr=subprocess.STDOUT,)
+                output  = output + output1
+            output = "<h3>cmd = <b>docker stats --no-stream "+ POST_CONTAINERNAME +"</b></h3>" + output
+            output = "<h2>Docker Container Statistics " + POST_CONTAINERNAME + " </h2> " + output
+            output = "{% extends \"results.html\" %}{% block body %}<pre>" + output
+            output = output + "</pre> {% endblock %}}"
+            f = open('templates/resultableStats.html', 'w')
+            f.write(output)
+            f.close()
+
+            return render_template('resultableStats.html')
+        except subprocess.CalledProcessError as e:
+            return render_template("500.html", error = str(e))
+    else:
+        return render_template('login.html')
+
+@app.route('/dockerContainerConfig', methods=['POST'])
+def dkcontainerconfig():
+    if session.get('logged_in'):
+        try:
+            POST_CONTAINERNAME = str(request.form['containerConfig'])
+            outputScript = "docker inspect --format='{{json .Config}}' " + POST_CONTAINERNAME + "| jq '.' | tee templates/resultableConfig.txt"
+            output = subprocess.check_output(outputScript, shell=True,stderr=subprocess.STDOUT,)
+            output = "<h2>Docker Container Config " + POST_CONTAINERNAME + " </h2>" + output
+            output = "{% extends \"results.html\" %}{% block body %}<pre>" + output
+            output = output + "</pre> {% endblock %}}"
+            f = open('templates/resultableConfig.html', 'w')
+            f.write(output)
+            f.close()
+
+            return render_template('resultableConfig.html')
+        except subprocess.CalledProcessError as e:
+            return render_template("500.html", error = str(e))
+    else:
+        return render_template('login.html')
+
+@app.route('/dockerContainerHostConfig', methods=['POST'])
+def dkcontainerhostconfig():
+    if session.get('logged_in'):
+        try:
+            POST_CONTAINERNAME = str(request.form['containerHostConfig'])
+            outputScript = "docker inspect --format='{{json .HostConfig}}' " + POST_CONTAINERNAME + " | jq '.' |tee templates/resultableHostConfig.txt"
+            output = subprocess.check_output(outputScript, shell=True,stderr=subprocess.STDOUT,)
+            #output = "<h3>cmd = <b>docker inspect --format='{{json .HostConfig}}' "+ POST_CONTAINERNAME +" | jq </b></h3>" + output
+            output = "<h2>Docker Container Host Config " + POST_CONTAINERNAME + " </h2> " + output
+            output = "{% extends \"results.html\" %}{% block body %}<pre>" + output
+            output = output + "</pre> {% endblock %}}"
+            f = open('templates/resultableHostConfig.html', 'w')
+            f.write(output)
+            f.close()
+
+            return render_template('resultableHostConfig.html')
+        except subprocess.CalledProcessError as e:
+            return render_template("500.html", error = str(e))
+    else:
+        return render_template('login.html')
+
+@app.route('/dockerContainerNetworkSettings', methods=['POST'])
+def dkcontainernetworksettings():
+    if session.get('logged_in'):
+        try:
+            POST_CONTAINERNAME = str(request.form['containerNetworkSettings'])
+            outputScript = "docker inspect --format='{{json .NetworkSettings}}' " + POST_CONTAINERNAME + " | jq '.' | tee templates/resultableNetworkSettings.txt"
+            output = subprocess.check_output(outputScript, shell=True,stderr=subprocess.STDOUT,)
+            #output = "<h3>cmd = <b>docker inspect --format='{{json .HostConfig}}' "+ POST_CONTAINERNAME +" | jq </b></h3>" + output
+            output = "<h2>Docker Container Network Settings " + POST_CONTAINERNAME + " </h2> " + output
+            output = "{% extends \"results.html\" %}{% block body %}<pre>" + output
+            output = output + "</pre> {% endblock %}}"
+            f = open('templates/resultableNetworkSettings.html', 'w')
+            f.write(output)
+            f.close()
+
+            return render_template('resultableNetworkSettings.html')
+        except subprocess.CalledProcessError as e:
+            return render_template("500.html", error = str(e))
+    else:
+        return render_template('login.html')
+
 @app.route('/dockerContainerIPaddress', methods=['POST'])
 def dkcontaineripaddress():
     if session.get('logged_in'):
         try:
             POST_CONTAINERNAME = str(request.form['containerIPaddress'])
-            outputScript = "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'" + POST_CONTAINERNAME + " | tee templates/resultableIPAddress.txt"
+            outputScript = "docker inspect " + POST_CONTAINERNAME + " --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' | tee templates/resultableIPAddress.txt"
             output = subprocess.check_output(outputScript, shell=True,stderr=subprocess.STDOUT,)
-            output = "<h3>cmd = <b>docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"+ POST_CONTAINERNAME +"</b></h3>" + output
-            output = "<h2>Docker Container" + POST_CONTAINERNAME + " IP Address </h2>" + output
+            #output = "<h3>cmd = <b>docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' " + POST_CONTAINERNAME + " </b></h3>" + output
+            output = "<h2>Docker Container " + POST_CONTAINERNAME + " IP Address </h2>" + output
             output = "{% extends \"results.html\" %}{% block body %}<pre>" + output
             output = output + "</pre> {% endblock %}}"
             f = open('templates/resultableIPAddress.html', 'w')
@@ -526,17 +612,17 @@ def dkcontainermounts():
     if session.get('logged_in'):
         try:
             POST_CONTAINERNAME = str(request.form['containerMounts'])
-            outputScript = "docker inspect --format='{{.Mounts}}'" + POST_CONTAINERNAME + " | tee templates/resultableIPAddress.txt"
+            outputScript = "docker inspect --format='{{json .Mounts}}' " + POST_CONTAINERNAME + " | jq '.' |tee templates/resultableMounts.txt"
             output = subprocess.check_output(outputScript, shell=True,stderr=subprocess.STDOUT,)
-            output = "<h3>cmd = <b>docker inspect --format='{{.Mounts}}'"+ POST_CONTAINERNAME +"</b></h3>" + output
-            output = "<h2>Docker Container" + POST_CONTAINERNAME + " IP Address </h2>" + output
+            #output = "<h3>cmd = <b>docker inspect --format='{{.Mounts}}'"+ POST_CONTAINERNAME +"</b></h3>" + output
+            output = "<h2>Docker Container " + POST_CONTAINERNAME + " Mounts </h2>" + output
             output = "{% extends \"results.html\" %}{% block body %}<pre>" + output
             output = output + "</pre> {% endblock %}}"
-            f = open('templates/resultableIPAddress.html', 'w')
+            f = open('templates/resultableMounts.html', 'w')
             f.write(output)
             f.close()
 
-            return render_template('resultableIPAddress.html')
+            return render_template('resultableMounts.html')
         except subprocess.CalledProcessError as e:
             return render_template("500.html", error = str(e))
     else:

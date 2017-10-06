@@ -95,9 +95,9 @@
   </tr>
   <tr>
     <td>
-      &nbsp<b>IP address</b> for Container
-      <form action="/dockerContainerIPaddress" method="POST">
-          &nbsp<input type="text" name="containerIPaddress" value="container_ID">
+      &nbsp<b>Statistics</b> for Container
+      <form action="/dockerContainerStats" method="POST">
+          &nbsp<input type="text" name="containerStats" value="container_ID">
           &nbsp<input type="submit" value="Get">
       </form>
     </td>
@@ -122,6 +122,38 @@
       <form action="/dockerContainerRestart" method="POST">
           &nbsp<input type="text" name="containerNameRestart" value="container_ID">
           &nbsp<input type="submit" value="Restart">
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      &nbsp<b>IP address</b> for Container
+      <form action="/dockerContainerIPaddress" method="POST">
+          &nbsp<input type="text" name="containerIPaddress" value="container_ID">
+          &nbsp<input type="submit" value="Get">
+      </form>
+    </td>
+    <td>
+      &nbsp<b>Config</b> for Container
+      <form action="/dockerContainerConfig" method="POST">
+          &nbsp<input type="text" name="containerConfig" value="container_ID">
+          &nbsp<input type="submit" value="Get">
+      </form>
+    </td>
+  </tr>
+  <tr>
+      <td>
+        &nbsp<b>Network Settings</b> for Container
+        <form action="/dockerContainerNetworkSettings" method="POST">
+            &nbsp<input type="text" name="containerNetworkSettings" value="container_ID">
+            &nbsp<input type="submit" value="Get">
+        </form>
+      </td>
+      <td>
+      &nbsp<b>Host Config</b> for Container
+      <form action="/dockerContainerHostConfig" method="POST">
+          &nbsp<input type="text" name="containerHostConfig" value="container_ID">
+          &nbsp<input type="submit" value="Get">
       </form>
     </td>
   </tr>
