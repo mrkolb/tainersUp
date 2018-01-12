@@ -36,11 +36,13 @@ Linux
 1. Fedora: sudo yum install python-setuptools; sudo easy_install virtualenv
 1. pip https://packaging.python.org/guides/installing-using-linux-tools/
 1. virtualenv flask
+1. source flask/bin/activate
 1. pip install -r requirements.txt
 1. chmod 744 app.py
 1. ./app.py to start application.
 1. http://localhost:4000
 1. default credentials are tuadmin / !qaz
+1. deactivate <== to turn off virtual environment
 
 Credential changes:
 1. Stop application IF RUNNING.
