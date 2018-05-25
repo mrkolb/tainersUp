@@ -1,0 +1,45 @@
+{% extends "results.html" %}{% block body %}
+<h3 align ="center">Partner Name Editing</h3>
+<h4 align ="center">{{partner}}</h4>
+<br />
+
+<h4><b><i>Partner administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+      Enter Partner Name
+    </th>
+    <th>
+      partner
+    </th>
+    <th>
+      partnername
+    </th>
+  </tr>
+   {% for dict_item in partner_edit_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         <form action="/adminprtnrsave" method="POST" id="ptnrformsave">
+           <input type="text" name="prtnrname" value="partnername" />
+           <input type="hidden" name="prtnr" value={{key}}>
+         </form>
+         <button type="submit" form="ptnrformsave" class="btn btn-success">
+           <i class="inside fa fa-save"></i> Save
+         </button>
+
+         <form action="/admincancel" method="POST" id="formcancel">
+         </form>
+         <button type="submit" form="formcancel" class="btn btn-success">
+           <i class="inside fas fa-ban"></i> Cancel
+         </button>
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+<br />
+
+{% endblock %}

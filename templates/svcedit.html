@@ -1,0 +1,45 @@
+{% extends "results.html" %}{% block body %}
+<h3 align ="center">Service Name Editing</h3>
+<h4 align ="center">{{partner}}</h4>
+<br />
+
+<h4><b><i>Service administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+      Enter Service Name
+    </th>
+    <th>
+      service
+    </th>
+    <th>
+      servicename
+    </th>
+  </tr>
+   {% for dict_item in service_edit_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         <!--Edit <i class="fa fa-edit"></i>-->
+         <form action="/adminsvcsave" method="POST" id="svcformsave">
+           <input type="text" name="svcname" value="servicename">
+           <input type="hidden" name="svc" value={{key}} >
+         </form>
+         <button type="submit" form="svcformsave" class="btn btn-success">
+           <i class="inside fas fa-save"></i> Save
+         </button>
+         <form action="/admincancel" method="POST" id="formcancel">
+         </form>
+         <button type="submit" form="formcancel" class="btn btn-success">
+           <i class="inside fas fa-ban"></i> Cancel
+         </button>
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+<br />
+
+{% endblock %}

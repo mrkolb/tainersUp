@@ -1,0 +1,89 @@
+{% extends "results.html" %}{% block body %}
+
+<h4 align ="center"><b><i>Profile administration</i></b></h4>
+<br />
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      Username
+    </th>
+    <th>
+      role
+    </th>
+    <th>
+      partner
+    </th>
+    {% for svc_item in svcname_list %}
+    <th>{{svc_item}}</th>
+    {% endfor %}
+  </tr>
+  <tr>
+      <td>
+         <form action="/adminprofsavenew" method="POST" id="profilesavenew">
+         </form>
+         <button type="submit" form="profilesavenew" class="btn btn-success">
+           <i class="inside fa fa-save"></i> Save
+         </button>
+      </td>
+      <td>
+        <select name="username" form="profilesavenew">
+          {% for user_item in user_dict %}
+            {% for key, value in user_item.items() %}
+             <option value="{{key}}">{{value}}</option>
+            {% endfor %}
+          {% endfor %}
+        </select>
+      </td>
+      <td>
+        <select name="role" form="profilesavenew">
+        {% for dict_item in role_dict %}
+          {% for key, value in dict_item.items() %}
+           <option value="{{key}}">{{value}}</option>
+          {% endfor %}
+        {% endfor %}
+        </select>
+      </td>
+      <td>
+        <select name="partner" form="profilesavenew">
+        {% for partner_item in partner_dict %}
+          {% for key, value in partner_item.items() %}
+           <option value="{{key}}">{{value}}</option>
+          {% endfor %}
+        {% endfor %}
+        </select>
+      </td>
+      <td>
+        <input type="number" name="svc_a" form="profilesavenew" min="0" max="1" >
+      </td>
+      <td>
+        <input type="number" name="svc_b" form="profilesavenew" min="0" max="1">
+      </td>
+      <td>
+        <input type="number" name="svc_c" form="profilesavenew" min="0" max="1">
+      </td>
+      <td>
+        <input type="number" name="svc_d" form="profilesavenew" min="0" max="1">
+      </td>
+      <td>
+        <input type="number" name="svc_e" form="profilesavenew" min="0" max="1">
+      </td>
+      <td>
+        <input type="number" name="svc_f" form="profilesavenew" min="0" max="1">
+      </td>
+  </tr>
+  <datalist id="defaultNumbers">
+    <option value="0">
+    <option value="1">
+  </datalist>
+</table>
+<form action="/admincancel" method="POST" id="formcancel">
+</form>
+<button type="submit" form="formcancel" class="btn btn-success">
+  <i class="inside fas fa-ban"></i> Cancel
+</button>
+
+
+{% endblock %}

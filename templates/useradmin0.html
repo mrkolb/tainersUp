@@ -1,0 +1,118 @@
+{% extends "results.html" %}{% block body %}
+<h3 align ="center">tainersUp administration</h3>
+<h4 align ="center">Partner: {{partner}}</h4>
+<br />
+<h4><b><i>User administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      user
+    </th>
+    <th>
+      firstname
+    </th>
+    <th>
+      lastname
+    </th>
+    <th>
+
+    </th>
+  </tr>
+   {% for list_row in user_list | batch(1, '&nbsp;')  %}
+      {% for list_item in list_row %}
+         <tr>
+           <td>
+             Edit
+           </td>
+           <td>{{list_item}}</td>
+           <td>{{list_item}}</td>
+           <td>{{list_item}}</td>
+           <td>
+             Delete
+           </td>
+         </tr>
+      {% endfor %}
+   {% endfor %}
+</table>
+   <br />
+<h4><b><i>Service administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      service
+    </th>
+    <th>
+      servicename
+    </th>
+  </tr>
+   {% for dict_item in service_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         Edit
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+<br />
+<h4><b><i>Partner administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      partner
+    </th>
+    <th>
+      partnername
+    </th>
+  </tr>
+   {% for dict_item in partner_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         Edit
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+<br />
+<h4><b><i>Role administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      role
+    </th>
+    <th>
+      rolename
+    </th>
+  </tr>
+   {% for dict_item in role_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         Edit
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+{% endblock %}}

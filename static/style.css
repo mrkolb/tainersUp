@@ -76,3 +76,10 @@ box-shadow: none;
   display: block;
 	margin-top: 12px;
 }
+
+.inside {
+position:absolute;
+text-indent:5px;
+margin-top:2px;
+color:green;
+}

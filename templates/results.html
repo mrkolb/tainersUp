@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/style_results.css" type="text/css">
 
 
@@ -69,7 +70,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Container Portfolio<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="https://cloud.docker.com/" target="_blank">Docker Cloud</a></li>
+            <li class="active"><a href="https://cloud.docker.com/" target="_blank">Docker Cloud<span class="sr-only">(current)</span></a></li>
             <li><a href="https://aws.amazon.com/ecs/" target="_blank">AWS</a></li>
             <li><a href="https://azure.microsoft.com" target="_blank">Azure</a></li>
             <li><a href="https://devcenter.heroku.com/articles/container-registry-and-runtime" target="_blank">Heroku</a></li>
@@ -98,6 +99,8 @@
             <li><a href="docker-composecmd">docker-compose</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="docker-machinecmd">docker-machine</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="kubernetescmd">kubernetes</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -115,6 +118,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools<span class="caret"></span></a>
           <ul class="dropdown-menu">
+            <li class="active"><a href="useradmin">User Administration<span class="sr-only">(current)</span></a></li>
             <li><a href="http://centralops.net/co/">Internet DNS lookup</a></li>
             <li><a href="https://www.whatsmydns.net/">DNS propagation</a></li>
               <li role="separator" class="divider"></li>
@@ -137,8 +141,8 @@
     {% block body %}{% endblock %}
     <hr />
   <div style="text-align: center">
-  tainersUp Copyright (C) 2017  WebLaminar LLC -
-  MIT License
+    <span style="font-size: 18px; background:black; color:white"><b><i>&nbsp;tainers</i></b></span><span style="font-size: 18px; background:black; color:#EE82EE"><b><i>Up&nbsp;&#9658;</i></b></span>
+   &copy; 2017<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, WebLaminar LLC - MIT license
   </div>
   </body>
 </html>

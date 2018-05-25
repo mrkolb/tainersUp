@@ -1,0 +1,74 @@
+{% extends "partner.html" %}{% block body %}
+<h3 align ="center">Issue Editing</h3>
+<h4 align ="center">{{partner}}</h4>
+<br />
+
+<h4><b><i>Issue administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      Issue ID
+    </th>
+    <th>
+      Issue Requestor
+    </th>
+    <th>
+      Issue Description
+    </th>
+    <th>
+      Actions Taken
+    </th>
+    <th>
+      Service
+    </th>
+    <th>
+      Resolved
+    </th>
+  </tr>
+   <tr>
+     <td>
+       <form action="/issuepartnersave" method="POST" id="issueformsave">
+         <!--<input type="text" name="issueDescription" value="issueDescription">-->
+         <input type="hidden" name="issue_id" value={{ issue_edit_dict['issue_id'] }} >
+       </form>
+       <button type="submit" form="issueformsave" class="btn btn-success">
+         <i class="inside fas fa-save"></i> Save
+       </button>
+       <form action="/issuepartnercancel" method="POST" id="formcancel">
+       </form>
+       <button type="submit" form="formcancel" class="btn btn-success">
+         <i class="inside fas fa-ban"></i> Cancel
+       </button>
+     </td>
+       <td>{{ issue_edit_dict['issue_id'] }}</td>
+       <td>{{ issue_edit_dict['issueRequestor'] }}</td>
+       <td>
+         <textarea rows="10" cols="50" name="issueDescriptions" form="issueformsave" >{{ issue_edit_dict['issueDescription'] }}</textarea>
+       </td>
+       <td>
+         <textarea rows="10" cols="50" name="issueActions" form="issueformsave">{{ issue_edit_dict['Actions'] }}</textarea>
+       </td>
+       <td>{{ issue_edit_dict['service'] }}</td>
+       <!--<td>
+         {% if issue_edit_dict['resolved'] == 1 %}
+         Yes
+         {% else %}
+         No
+         {% endif %}
+       </td>-->
+       <!--<td>
+         <input type="number" name="svc_a" min="0" max="1" form="issueformsave">
+       </td>-->
+       <td>
+         <select name="resolved" form="issueformsave">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+       </td>
+   </tr>
+</table>
+
+{% endblock %}

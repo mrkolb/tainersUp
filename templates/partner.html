@@ -1,0 +1,134 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }}tainersUp</title>
+    {% else %}
+    <title>tainersUp - Partner</title>
+    {% endif %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/style_results.css" type="text/css">
+
+
+  </head>
+  <body>
+    <table width="100%">
+      <tr>
+        <td>
+        <img src="{{url_for('static', filename='images/logo.png')}}" />
+        </td>
+        <td align="left">
+          <h2>Partners Page</h2>
+          <h3><i>Partner:</i> &nbsp;{{partner}}</h3>
+          <h3><i>User:</i>&nbsp;{{username}}</h3>
+          <h3><i>Name:</i> &nbsp;{{firstname}}&nbsp;{{lastname}}</h3>
+        </td>
+      </tr>
+    </table>
+  <!--  <div style="text-align: left">
+      <img src="{{url_for('static', filename='images/logo.png')}}" />
+    </div> -->
+
+    <br>
+
+    <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="partner"><span style="font-size: 18px; background:black; color:white"><b><i>&nbsp;tainers</i></b></span><span style="font-size: 18px; background:black; color:#EE82EE"><b><i>Up&nbsp;&#9658;</i></b></span></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="dockerlist">Image list<span class="sr-only">(current)</span></a></li>
+        <li><a href="dockercontainer">Container list<span class="sr-only">(current)</span></a></li>
+        <li><a href="tcpport">Ports Used<span class="sr-only">(current)</span></a></li>
+
+        <!--<li><a href="containermgmt">Container Mgmt<span class="sr-only">(current)</span></a></li>-->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Container Portfolio<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="https://cloud.docker.com/" target="_blank">Docker Cloud</a></li>
+            <li><a href="https://aws.amazon.com/ecs/" target="_blank">AWS</a></li>
+            <li><a href="https://azure.microsoft.com" target="_blank">Azure</a></li>
+            <li><a href="https://devcenter.heroku.com/articles/container-registry-and-runtime" target="_blank">Heroku</a></li>
+            <li><a href="https://cloud.digitalocean.com/login" target="_blank">Digital Ocean</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+          </ul>
+        </li>
+
+      </ul>
+      <!--<form class="navbar-form navbar-left" action="/dockersearch" method="POST">
+        <div class="form-group ">
+          <input type="text" class="form-control" value="" placeholder="Search" name="Search">
+          <input type="submit" value="Docker search" class="btn btn-primary btn-large btn-block" >
+        </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+          <input type="submit" class="btn btn-default">
+      </form>-->
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Docker Concepts<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="dockercmd">docker</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="docker-composecmd">docker-compose</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="docker-machinecmd">docker-machine</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Topics<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="dockerBuildCreateRun">Build vs Create vs Run</a></li>
+            <li><a href="dockerhousekeeping">Housekeeping</a></li>
+            <li><a href="dockerbackups">Backups</a>
+            <li><a href="dockeraccess">Container Access</a></li>
+            <li><a href="dockervolume">Volume Plugins</a></li>
+            <li><a href="dockerfilesystem">Union FileSystem</a></li>
+          </ul>
+        </li>
+        <!--<li class="active"><a href="dockersearch">Docker Doc search<span class="sr-only">(current)</span></a></li>-->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="http://centralops.net/co/">Internet DNS lookup</a></li>
+            <li><a href="https://www.whatsmydns.net/">DNS propagation</a></li>
+              <li role="separator" class="divider"></li>
+            <li><a href="https://whois.icann.org/en">WhoIs lookup</a></li>
+              <li role="separator" class="divider"></li>
+            <li><a href="https://www.ssllabs.com/">TLS/SSL security</a></li>
+            <li><a href="https://www.whatismybrowser.com/">whatismybrowser</a></li>
+            <li><a href="http://krebsonsecurity.com/">Hacking alerts</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://wharfee.com">Wharfee docker shell</a></li>
+            <li><a href="https://github.com/wsargent/docker-cheat-sheet">Docker cheatsheet</a></li>
+          </ul>
+        </li>
+        <li><a href="logout">Logout</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+    <hr>
+    {% block body %}{% endblock %}
+    <hr />
+    <div style="text-align: center">
+      <span style="font-size: 18px; background:black; color:white"><b><i>&nbsp;tainers</i></b></span><span style="font-size: 18px; background:black; color:#EE82EE"><b><i>Up&nbsp;&#9658;</i></b></span>
+     &copy; 2017<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, WebLaminar LLC - MIT license
+    </div>
+  </body>
+</html>

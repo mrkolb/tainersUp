@@ -1,0 +1,242 @@
+{% extends "results.html" %}{% block body %}
+<h3 align ="center">tainersUp administration</h3>
+<h4 align ="center">{{partner}}</h4>
+<br />
+<h4><b><i>User administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+
+    </th>
+    <th>
+      username
+    </th>
+    <th>
+      firstname
+    </th>
+    <th>
+      lastname
+    </th>
+    <th>
+
+    </th>
+  </tr>
+   {% for list_row in user_list | slice(user_rows) %}
+   <tr>
+     <td class="text-nowrap">
+
+       <form action="/adminuseredit" method="POST" id="userform{{loop.index}}">
+         <input type="hidden" name="username" value={{list_row[0]}} />
+       </form>
+
+       <button type="submit" form="userform{{loop.index}}" class="btn btn-success">
+         <i class="inside fa fa-edit"></i> Edit
+       </button>
+    </td>
+    <td>
+       <form action="/adminusereditpwd" method="POST" id="userformpwd{{loop.index}}">
+         <input type="hidden" name="username" value={{list_row[0]}} />
+       </form>
+
+       <button type="submit" form="userformpwd{{loop.index}}" class="btn btn-success">
+         <i class="fa fa-key" aria-hidden="true"></i></i> Password
+       </button>
+    </td>
+        {% for list_item in list_row  %}
+             <td>{{list_item}}</td>
+        {% endfor %}
+    <td>
+        <!--Delete <i class="fas fa-trash-alt"></i>-->
+        <form action="/adminuserdelete" method="POST" id="userformdel{{loop.index}}">
+          <input type="hidden" name="username" value={{list_row[0]}} />
+        </form>
+        {% if loop.index == 1 %}
+
+        {% else %}
+        <button type="submit" form="userformdel{{loop.index}}" class="btn btn-success">
+          <i class="inside fas fa-trash-alt"></i> Delete
+        </button>
+        {% endif %}
+     </td>
+  </tr>
+   {% endfor %}
+</table>
+<form action="/adminusercreate" method="POST" id="usercreateform">
+</form>
+
+<button type="submit" form="usercreateform" class="btn btn-success">
+  <i class="inside fas fa-plus-square"></i> Create User
+</button>
+   <br />
+   <h4><b><i>Profile administration</i></b></h4>
+   <table class="table table-bordered table-striped ">
+     <tr>
+       <th>
+
+       </th>
+       <th>
+         username
+       </th>
+       <th>
+         role
+       </th>
+       <th>
+         partner
+       </th>
+       <th>
+         svc_a
+       </th>
+       <th>
+         svc_b
+       </th>
+       <th>
+         svc_c
+       </th>
+       <th>
+         svc_d
+       </th>
+       <th>
+         svc_e
+       </th>
+       <th>
+         svc_f
+       </th>
+       <th>
+
+       </th>
+     </tr>
+      {% for prof_row in prof_list | slice(prof_rows) %}
+      <tr>
+        <td>
+          <!--Edit <i class="fa fa-edit"></i>-->
+          <form action="/adminprofedit" method="POST" id="profform{{loop.index}}">
+            <input type="hidden" name="username" value={{prof_row[0]}} />
+          </form>
+
+          <button type="submit" form="profform{{loop.index}}" class="btn btn-success">
+            <i class="inside fa fa-edit"></i> Edit
+          </button>
+        </td>
+           {% for prof_item in prof_row  %}
+                <td>{{prof_item}}</td>
+           {% endfor %}
+        <td>
+           <!--Delete <i class="fas fa-trash-alt"></i>-->
+           <form action="/adminprofdelete" method="POST" id="profformdel{{loop.index}}">
+             <input type="hidden" name="username" value={{prof_row[0]}} />
+           </form>
+
+           <button type="submit" form="profformdel{{loop.index}}" class="btn btn-success">
+             <i class="inside fas fa-trash-alt"></i> Delete
+           </button>
+        </td>
+     </tr>
+      {% endfor %}
+   </table>
+   <form action="/adminprofcreate" method="POST" id="profcreateform">
+   </form>
+
+   <button type="submit" form="profcreateform" class="btn btn-success">
+     <i class="inside fas fa-plus-square"></i> Create Profile
+   </button>
+   <br />
+<h4><b><i>Service administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      service
+    </th>
+    <th>
+      servicename
+    </th>
+  </tr>
+   {% for dict_item in service_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         <form action="/adminsvcedit" method="POST" id="svcform{{loop.index}}">
+           <input type="hidden" name="svceditname" value='{{value}}' />
+         </form>
+         <button type="submit" form="svcform{{loop.index}}" class="btn btn-success">
+           <i class="inside fa fa-edit"></i> Edit
+         </button>
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+<br />
+<h4><b><i>Partner administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      partner
+    </th>
+    <th>
+      partnername
+    </th>
+  </tr>
+   {% for dict_item in partner_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         <!--Edit <i class="fa fa-edit"></i>-->
+         <form action="/adminprtnredit" method="POST" id="prtnrform{{loop.index}}">
+           <input type="hidden" name="prtnreditname" value={{value}} />
+         </form>
+
+         <button type="submit" form="prtnrform{{loop.index}}" class="btn btn-success">
+           <i class="inside fa fa-edit"></i> Edit
+         </button>
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+<br />
+<h4><b><i>Role administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      role
+    </th>
+    <th>
+      rolename
+    </th>
+  </tr>
+   {% for dict_item in role_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         <!--Edit <i class="fa fa-edit"></i>-->
+         <form action="/adminroleedit" method="POST" id="roleform{{loop.index}}">
+           <input type="hidden" name="roleeditname" value={{value}} />
+         </form>
+
+         <button type="submit" form="roleform{{loop.index}}" class="btn btn-success">
+           <i class="inside fa fa-edit"></i> Edit
+         </button>
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+{% endblock %}

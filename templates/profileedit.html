@@ -1,0 +1,144 @@
+{% extends "results.html" %}{% block body %}
+
+<h4 align ="center"><b><i>Profile administration</i></b></h4>
+<br />
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+      ID's
+    </th>
+    <th>
+      Username
+    </th>
+    <th>
+      role
+    </th>
+    <th>
+      partner
+    </th>
+    {% for svc_item in svcname_list %}
+    <th>{{svc_item}}</th>
+    {% endfor %}
+    <!--<th>
+      svc_a
+    </th>
+    <th>
+      svc_b
+    </th>
+    <th>
+      svc_c
+    </th>
+    <th>
+      svc_d
+    </th>
+    <th>
+      svc_e
+    </th>
+    <th>
+      svc_f
+    </th>-->
+  </tr>
+  <tr>
+    <td>
+      Existing cfg
+    </td>
+    <td>
+      {{username_prof}}
+    </td>
+    <td>
+      {% for role_item in rolename_list %}
+      {{role_item}}
+      {% endfor %}
+    </td>
+    <td>
+      {% for prtnr_item in prtnrname_list %}
+      {{prtnr_item}}
+      {% endfor %}
+    </td>
+
+      {% for prof_item in prof_list %}
+      {% if loop.index == 4 %}
+      <td>{{prof_item}}</td>
+      {% endif %}
+      {% if loop.index == 5 %}
+      <td>{{prof_item}}</td>
+      {% endif %}
+      {% if loop.index == 6 %}
+      <td>{{prof_item}}</td>
+      {% endif %}
+      {% if loop.index == 7 %}
+      <td>{{prof_item}}</td>
+      {% endif %}
+      {% if loop.index == 8 %}
+      <td>{{prof_item}}</td>
+      {% endif %}
+      {% if loop.index == 9 %}
+      <td>{{prof_item}}</td>
+      {% endif %}
+      {% endfor %}
+
+  </tr>
+  <tr>
+       <td>
+         <form action="/adminprofilesave" method="POST" id="profilesave">
+           <input type="hidden" name="profileusername" value={{username_prof}} />
+         </form>
+         <button type="submit" form="profilesave" class="btn btn-success">
+           <i class="inside fa fa-save"></i> Save
+         </button>
+
+
+      </td>
+      <td>
+        {{username_prof}}
+      </td>
+      <td>
+        <select name="role" form="profilesave">
+        {% for dict_item in role_dict %}
+          {% for key, value in dict_item.items() %}
+           <option value="{{key}}">{{value}}</option>
+          {% endfor %}
+        {% endfor %}
+        </select>
+      </td>
+      <td>
+        <select name="partner" form="profilesave">
+        {% for partner_item in partner_dict %}
+          {% for key, value in partner_item.items() %}
+           <option value="{{key}}">{{value}}</option>
+          {% endfor %}
+        {% endfor %}
+        </select>
+      </td>
+      <td>
+        <input type="number" name="svc_a" min="0" max="1" form="profilesave">
+      </td>
+      <td>
+        <input type="number" name="svc_b" form="profilesave" min="0" max="1">
+      </td>
+      <td>
+        <input type="number" name="svc_c" form="profilesave" min="0" max="1">
+      </td>
+      <td>
+        <input type="number" name="svc_d" form="profilesave" min="0" max="1">
+      </td>
+      <td>
+        <input type="number" name="svc_e" form="profilesave" min="0" max="1">
+      </td>
+      <td>
+        <input type="number" name="svc_f" form="profilesave" min="0" max="1">
+      </td>
+  </tr>
+  <datalist id="defaultNumbers">
+    <option value="0">
+    <option value="1">
+  </datalist>
+</table>
+<form action="/admincancel" method="POST" id="formcancel">
+</form>
+<button type="submit" form="formcancel" class="btn btn-success">
+  <i class="inside fas fa-ban"></i> Cancel
+</button>
+
+
+{% endblock %}

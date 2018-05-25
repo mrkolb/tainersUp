@@ -1,0 +1,45 @@
+{% extends "results.html" %}{% block body %}
+<h3 align ="center">Role Name Editing</h3>
+<h4 align ="center">{{partner}}</h4>
+<br />
+
+<h4><b><i>Role administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+      Enter Role Name <i> - no spaces in rolename</i>
+    </th>
+    <th>
+      role
+    </th>
+    <th>
+      rolename
+    </th>
+  </tr>
+   {% for dict_item in role_edit_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         <form action="/adminrolesave" method="POST" id="roleformsave">
+           <input type="text" name="rolename" value="rolename" />
+           <input type="hidden" name="role" value={{key}}>
+         </form>
+         <button type="submit" form="roleformsave" class="btn btn-success">
+           <i class="inside fa fa-save"></i> Save
+         </button>
+
+         <form action="/admincancel" method="POST" id="formcancel">
+         </form>
+         <button type="submit" form="formcancel" class="btn btn-success">
+           <i class="inside fas fa-ban"></i> Cancel
+         </button>
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+<br />
+
+{% endblock %}

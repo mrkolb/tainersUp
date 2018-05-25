@@ -1,0 +1,52 @@
+{% extends "results.html" %}{% block body %}
+
+<h4 align ="center"><b><i>User creation</i></b></h4>
+<br />
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+      Username
+    </th>
+    <th>
+      Password
+    </th>
+    <th>
+      firstname
+    </th>
+    <th>
+      lastname
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <input type="text" name="username" form="usersave" minlength="5" placeholder="min 5 characters" />
+    </td>
+    <td>
+      <input type="password" name="password" form="usersave" minlength="8" placeholder="min 8 characters"/>
+    </td>
+    <td>
+      <input type="text" name="firstname" form="usersave"/>
+    </td>
+    <td>
+      <input type="text" name="lastname" form="usersave"/>
+    </td>
+  </tr>
+  <tr>
+</table>
+
+<form action="/adminusersave" method="POST" id="usersave">
+
+</form>
+<button type="submit" form="usersave" class="btn btn-success">
+ <i class="inside fa fa-save"></i> Save
+</button>
+
+
+<form action="/admincancel" method="POST" id="formcancel">
+</form>
+<button type="submit" form="formcancel" class="btn btn-success">
+  <i class="inside fas fa-ban"></i> Cancel
+</button>
+
+
+{% endblock %}

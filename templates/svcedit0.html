@@ -1,0 +1,230 @@
+{% extends "results.html" %}{% block body %}
+<h3 align ="center">Service Name Editing</h3>
+<h4 align ="center">{{partner}}</h4>
+<br />
+<h4><b><i>User administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      username
+    </th>
+    <th>
+      firstname
+    </th>
+    <th>
+      lastname
+    </th>
+    <th>
+
+    </th>
+  </tr>
+   {% for list_row in user_list | slice(user_rows) %}
+   <tr>
+     <td>
+       Edit <i class="fa fa-edit"></i>
+       {{list_row[0]}}
+       <form action="/adminuseredit" method="POST" id="userform">
+         <input type="hidden" name="username" value={{list_row[0]}} />
+       </form>
+
+       <button type="submit" form="userform" class="btn btn-success">
+         <i class="inside fa fa-edit"></i> Edit
+       </button>
+     </td>
+        {% for list_item in list_row  %}
+             <td>{{list_item}}</td>
+        {% endfor %}
+     <td>
+        Delete <i class="fas fa-trash-alt"></i>
+        <form action="/adminuserdelete" method="POST" id="userformdel">
+          <input type="hidden" name="username" value={{list_row[0]}} />
+        </form>
+
+        <button type="submit" form="userformdel" class="btn btn-success">
+          <i class="inside fas fa-trash-alt"></i> Delete
+        </button>
+     </td>
+  </tr>
+   {% endfor %}
+</table>
+<form action="/adminusercreate" method="POST" id="usercreateform">
+</form>
+
+<button type="submit" form="usercreateform" class="btn btn-success">
+  <i class="inside fas fa-plus-square"></i> Create User
+</button>
+   <br />
+   <h4><b><i>Profile administration</i></b></h4>
+   <table class="table table-bordered table-striped ">
+     <tr>
+       <th>
+
+       </th>
+       <th>
+         username
+       </th>
+       <th>
+         role
+       </th>
+       <th>
+         partner
+       </th>
+       <th>
+         svc_a
+       </th>
+       <th>
+         svc_b
+       </th>
+       <th>
+         svc_c
+       </th>
+       <th>
+         svc_d
+       </th>
+       <th>
+         svc_e
+       </th>
+       <th>
+         svc_f
+       </th>
+       <th>
+
+       </th>
+     </tr>
+      {% for prof_row in prof_list | slice(prof_rows) %}
+      <tr>
+        <td>
+          Edit <i class="fa fa-edit"></i>
+          <form action="/adminprofedit" method="POST" id="profform">
+            <input type="hidden" name="username" value={{prof_row[0]}} />
+          </form>
+
+          <button type="submit" form="profform" class="btn btn-success">
+            <i class="inside fa fa-edit"></i> Edit
+          </button>
+        </td>
+           {% for prof_item in prof_row  %}
+                <td>{{prof_item}}</td>
+           {% endfor %}
+        <td>
+           Delete <i class="fas fa-trash-alt"></i>
+           <form action="/adminprofdelete" method="POST" id="profformdel">
+             <input type="hidden" name="username" value={{prof_row[0]}} />
+           </form>
+
+           <button type="submit" form="profformdel" class="btn btn-success">
+             <i class="inside fas fa-trash-alt"></i> Delete
+           </button>
+        </td>
+     </tr>
+      {% endfor %}
+   </table>
+   <form action="/adminprofcreate" method="POST" id="profcreateform">
+   </form>
+
+   <button type="submit" form="profcreateform" class="btn btn-success">
+     <i class="inside fas fa-plus-square"></i> Create Profile
+   </button>
+   <br />-->
+<h4><b><i>Service administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      service
+    </th>
+    <th>
+      servicename
+    </th>
+  </tr>
+   {% for dict_item in service_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         <!--Edit <i class="fa fa-edit"></i>-->
+         <form action="/adminsvcsave" method="POST" id="svcformsave">
+           <input type="text" name="svcname" value="servicename">
+         </form>
+
+         <button type="submit" form="svcformsave" class="btn btn-success">
+           <i class="inside fas fa-save"></i> Edit
+         </button>
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+<br />
+<h4><b><i>Partner administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      partner
+    </th>
+    <th>
+      partnername
+    </th>
+  </tr>
+   {% for dict_item in partner_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         Edit <i class="fa fa-edit"></i>
+         <form action="/adminptnredit" method="POST" id="ptnrform">
+           <input type="hidden" name="svcname" value={{value}} />
+         </form>
+
+         <button type="submit" form="ptnrform" class="btn btn-success">
+           <i class="inside fa fa-edit"></i> Edit
+         </button>
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>
+<br />
+<h4><b><i>Role administration</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      role
+    </th>
+    <th>
+      rolename
+    </th>
+  </tr>
+   {% for dict_item in role_dict %}
+     {% for key, value in dict_item.items() %}
+     <tr>
+       <td>
+         Edit <i class="fa fa-edit"></i>
+         <form action="/adminroleedit" method="POST" id="roleform">
+           <input type="hidden" name="rolename" value={{value}} />
+         </form>
+
+         <button type="submit" form="roleform" class="btn btn-success">
+           <i class="inside fa fa-edit"></i> Edit
+         </button>
+       </td>
+       <td>{{key}}</td>
+       <td>{{value}}</td>
+     </tr>
+     {% endfor %}
+   {% endfor %}
+</table>-->
+{% endblock %}}

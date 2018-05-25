@@ -1,0 +1,49 @@
+{% extends "results.html" %}{% block body %}
+
+<h4 align ="center"><b><i>User administration</i></b></h4>
+<br />
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+      username
+    </th>
+    <th>
+      firstname
+    </th>
+    <th>
+      lastname
+    </th>
+  </tr>
+  <tr>
+    {% for act_item in act_list %}
+    {% if loop.index == 1 %}
+    <td>{{act_item}}</td>
+    {% endif %}
+    {% if loop.index == 2 %}
+    <td><input type="text" name="actfirstname" form="usersave" placeholder={{act_item}} value={{act_item}}></td>
+    {% endif %}
+    {% if loop.index == 3 %}
+    <td><input type="text" name="actlastname" form="usersave" placeholder={{act_item}} value={{act_item}}></td>
+    {% endif %}
+    {% endfor %}
+  </tr>
+  <tr>
+    <td>
+      <form action="/adminusereditsave" method="POST" id="usersave">
+        <input type="hidden" name="actusername" value={{act_list[0]}} />
+      </form>
+      <button type="submit" form="usersave" class="btn btn-success">
+        <i class="inside fa fa-save"></i> Save
+      </button>
+    </td>
+  </tr>
+</table>
+
+<form action="/admincancel" method="POST" id="formcancel">
+</form>
+<button type="submit" form="formcancel" class="btn btn-success">
+  <i class="inside fas fa-ban"></i> Cancel
+</button>
+
+
+{% endblock %}

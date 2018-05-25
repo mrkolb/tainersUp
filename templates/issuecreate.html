@@ -1,0 +1,65 @@
+{% extends "partner.html" %}{% block body %}
+<h3 align ="center">Issue Creation</h3>
+<h4 align ="center">{{partner}}</h4>
+<br />
+
+<h4><b><i>Issue creation</i></b></h4>
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+    </th>
+    <th>
+      Issue Description
+    </th>
+    <th>
+      Actions Taken
+    </th>
+    <th>
+      Service
+    </th>
+    <th>
+      Resolved
+    </th>
+  </tr>
+   <tr>
+     <td>
+       <form action="/issuecreatesave" method="POST" id="issueformsave">
+         <input type="hidden" name="issueRequestor" value= {{username}}>
+         <input type="hidden" name="partner" value= {{partner}}>
+       </form>
+       <button type="submit" form="issueformsave" class="btn btn-success">
+         <i class="inside fas fa-save"></i> Save
+       </button>
+       <form action="/issuepartnercancel" method="POST" id="formcancel">
+       </form>
+       <button type="submit" form="formcancel" class="btn btn-success">
+         <i class="inside fas fa-ban"></i> Cancel
+       </button>
+     </td>
+       <td>
+         <textarea rows="10" cols="50" name="issueDescriptions" form="issueformsave" ></textarea>
+       </td>
+       <td>
+         <textarea rows="10" cols="50" name="issueActions" form="issueformsave"></textarea>
+       </td>
+       <td>
+         <select name="service" form="issueformsave">
+         {% for service_item in service_dict %}
+           {% for key, value in service_item.items() %}
+            <option value="{{key}}">{{value}}</option>
+           {% endfor %}
+         {% endfor %}
+         </select>
+
+       </td>
+
+       <td>
+         <select name="resolved" form="issueformsave">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+       </td>
+   </tr>
+</table>
+
+{% endblock %}

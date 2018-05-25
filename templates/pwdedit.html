@@ -1,0 +1,67 @@
+{% extends "results.html" %}{% block body %}
+<script type="text/javascript">
+
+  function checkPassword(str)
+  {
+    var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    return re.test(str);
+  }
+
+  function checkForm(form)
+  {
+    if(form.username.value == "") {
+      alert("Error: Username cannot be blank!");
+      form.username.focus();
+      return false;
+    }
+    re = /^\w+$/;
+    if(!re.test(form.username.value)) {
+      alert("Error: Username must contain only letters, numbers and underscores!");
+      form.username.focus();
+      return false;
+    }
+    if(form.pwd1.value != "" && form.pwd1.value == form.pwd2.value) {
+      if(!checkPassword(form.pwd1.value)) {
+        alert("The password you have entered is not valid!");
+        form.pwd1.focus();
+        return false;
+      }
+    } else {
+      alert("Error: Please check that you've entered and confirmed your password!");
+      form.pwd1.focus();
+      return false;
+    }
+    return true;
+  }
+
+</script>
+<h3 align ="center">Change Password</h3>
+<h4 align ="center">{{partner}}</h4>
+<br />
+
+<h4><b><i>Password administration</i></b></h4>
+
+<form method="POST" form="pwdeditsave" action="/adminuserpwdsave" onsubmit="return checkForm(this);">
+  <fieldset>
+  <input type="hidden" name="username" value={{pwdusername}} />
+  <legend>Change Password</legend>
+  <p>Username: {{pwdusername}}</p>
+  <p>Password: <input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers" type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="pwd1" onchange="
+    this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
+    if(this.checkValidity()) form.pwd2.pattern = RegExp.escape(this.value);"></p>
+  <p>Confirm Password: <input title="Please enter the same Password as above" type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="pwd2" onchange="
+    this.setCustomValidity(this.validity.patternMismatch ? this.title : '');"></p>
+  <p><input type="submit" value="Save Changes"></p>
+  </fieldset>
+</form>
+
+<form action="/admincancel" method="POST" id="formcancel">
+</form>
+
+<button type="submit" form="formcancel" class="btn btn-success">
+  <i class="inside fas fa-ban"></i> Cancel
+</button>
+
+<br />
+
+{% endblock %}

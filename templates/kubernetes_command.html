@@ -1,0 +1,237 @@
+{% extends "results.html" %}
+{% block body %}
+<h2>kubernetes commands</h2>
+<p>
+
+<table width="100%" cellpadding="10">
+  <tr>
+    <td>
+      <ul>
+        <li>
+          Kubernetes is a container orchestration tool developed at Google orginally known as "Borg".
+        </li>
+        <li>
+          It has developed large following and Docker has integrated it into their container solution.
+        </li>
+        <li>
+          A Pod is a cluster of containers that comprise an application solution.
+        </li>
+        <li>
+          It is controlled by a hash table known as etcd along with a scheduler and manager node.
+        </li>
+      </ul>
+    </p>
+    <br />
+    <img src="{{url_for('static', filename='images/kubeArch2.jpg')}}" />
+    <hr />
+    <p>
+
+        <h3></h3>Docker Kubernetes installation
+<pre>
+
+
+<a href=https://rominirani.com/tutorial-getting-started-with-kubernetes-with-docker-on-mac-7f58467203fd> Docker Kubernetes getting started tutorial</a>
+
+kubectl version
+
+$ kubectl config current-context
+docker-for-desktop
+
+$ kubectl cluster-info
+
+
+Kubernetes master is running at https://localhost:6443
+KubeDNS is running at https://localhost:6443/api/v1/namespaces/kube-system/services/kube-dns/proxy
+
+$ kubectl get nodes
+NAME               STATUS  ROLES  AGE VERSION
+docker-for-desktop Ready   master 7h  v1.8.2
+
+$ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
+secret “kubernetes-dashboard-certs” created
+serviceaccount “kubernetes-dashboard” created
+role “kubernetes-dashboard-minimal” created
+rolebinding “kubernetes-dashboard-minimal” created
+deployment “kubernetes-dashboard” created
+service “kubernetes-dashboard” created
+
+ [18] → kubectl get pods --namespace=kube-system
+
+NAME                                         READY     STATUS    RESTARTS   AGE
+etcd-docker-for-desktop                      1/1       Running   0          11m
+kube-apiserver-docker-for-desktop            1/1       Running   0          11m
+kube-controller-manager-docker-for-desktop   1/1       Running   0          11m
+kube-dns-6f4fd4bdf-tdv4q                     3/3       Running   0          12m
+kube-proxy-zfvdj                             1/1       Running   0          12m
+kube-scheduler-docker-for-desktop            1/1       Running   0          11m
+kubernetes-dashboard-5bd6f767c7-422bw        1/1       Running   0          6m
+
+$ kubectl port-forward kubernetes-dashboard-5bd6f767c7-422bw 8443:8443 —namespace=kube-system
+
+Forwarding from 127.0.0.1:8443 -> 8443
+
+You can now launch a browser and go to https://localhost:8443.
+
+<a href=https://hub.docker.com/r/peopleperhour/etcdctl/>etcdctl command</a>
+</pre>
+</table>
+
+<hr />
+<p>
+<h3> Kubernetes commands</h3>
+<h4>kubectl command</h4>
+
+Here is the list of commands:
+<ul>
+  <li>
+  '''get'''&nbsp&nbsp&nbsp- Display one or many resources  e.g. kubectl get pods
+  </li>
+  <li>
+  '''describe''' &nbsp&nbsp&nbsp- Show details of a specific resource
+  </li>
+  <li>
+  '''create''' &nbsp&nbsp&nbsp- Create a resource by filename or stdin update Update a resource by filename or stdin.
+  </li>
+  <li>
+  '''delete''' &nbsp&nbsp&nbsp- Delete a resource by filename, stdin, resource and ID, or by resources and label selector.
+  </li>
+  <li>
+  '''namespace''' &nbsp&nbsp&nbsp- SUPERCEDED: Set and view the current Kubernetes namespace
+  </li>
+  <li>
+  '''log''' &nbsp&nbsp&nbsp- Print the logs for a container in a pod.
+  </li>
+  <li>
+  '''rolling-update''' &nbsp&nbsp&nbsp- Perform a rolling update of the given ReplicationController.
+  </li>
+  <li>
+  '''resize''' &nbsp&nbsp&nbsp- Set a new size for a Replication Controller.
+  </li>
+  <li>
+  '''exec''' &nbsp&nbsp&nbsp- Execute a command in a container.
+  </li>
+  <li>
+  '''port-forward''' &nbsp&nbsp&nbsp- Forward one or more local ports to a pod.
+  </li>
+  <li>
+  '''proxy''' &nbsp&nbsp&nbsp- Run a proxy to the Kubernetes API server run-container
+  </li>
+  <li>
+  '''run''' &nbsp&nbsp&nbsp- a particular image on the cluster.
+  </li>
+  <li>
+  '''stop''' &nbsp&nbsp&nbsp- Gracefully shut down a resource by id or filename.
+  </li>
+  <li>
+  '''expose''' &nbsp&nbsp&nbsp- Take a replicated application and expose it as Kubernetes Service
+  </li>
+  <li>
+  '''label''' &nbsp&nbsp&nbsp- Update the labels on a resource config
+  </li>
+  <li>
+  '''config''' &nbsp&nbsp&nbsp- modifies kubeconfig files
+  </li>
+  <li>
+  '''cluster-info''' &nbsp&nbsp&nbsp- Display cluster info
+  </li>
+  <li>
+  '''api-versions''' &nbsp&nbsp&nbsp- Print available API versions.
+  </li>
+  <li>
+  '''version''' &nbsp&nbsp&nbsp- Print the client and server version information.
+  </li>
+  <li>
+  '''help''' &nbsp&nbsp&nbsp- Help about any command
+  </li>
+</ul>
+
+
+<h4>etcdctl command</h4>
+<a href=https://www.digitalocean.com/community/tutorials/how-to-use-etcdctl-and-etcd-coreos-s-distributed-key-value-store>etcd key store</a>
+<ul>
+  <li>
+  '''etcdctl ls /'''  &nbsp&nbsp&nbsp&lt--get base of key:value store in etcd
+  </li>
+  <li>
+  '''etcdctl ls /''' --recursive &nbsp&nbsp&nbsp &lt--get tree of nodes
+  </li>
+  <li>
+ '''etcdctl -o extended get "pathofthe node"''' &nbsp&nbsp&nbsp&lt--get key:value of node
+  </li>
+  <li>
+  '''etcdctl mkdir /example'''  &nbsp&nbsp&nbsp&lt--create directory
+  </li>
+  <li>
+  '''etcdctl mk /example/key data'''  &nbsp&nbsp&nbsp&lt--make key:value pair
+  </li>
+  <li>
+  '''etcdctl set /example/key new'''  &nbsp&nbsp&nbsp&lt--combination of mkdir and mk or update
+  </li>
+  <li>
+  '''etcdctl get /example/key'''  &nbsp&nbsp&nbsp--&gt reulst is "data"
+  </li>
+  <li>
+  '''etcdctl update /example/key turtle''' &nbsp&nbsp&nbsp&lt-- update data in /example/key
+  </li>
+  <li>
+  '''etcdctl mkdir /here/you/go --ttl 120'''  &nbsp&nbsp&nbsp&lt-- setting ttl on node directory
+  </li>
+  <li>
+  '''etcdctl rm /a/b/c'''  &nbsp&nbsp&nbsp&lt-- remove a key
+  </li>
+  <li>
+  '''etcdctl rm /a --recursive'''  &nbsp&nbsp&nbsp&lt--remove recursively
+  </li>
+  <li>
+  '''while true; do etcdctl watch --recursive /example; done'''  &nbsp&nbsp&nbsp&lt--check for changes on key
+  </li>
+  <li>
+  '''etcdctl ls --recursive /_etcd''' &nbsp&nbsp&nbsp&lt-- show hidden directories
+  </li>
+
+</ul>
+
+<h4>JSON API etcd port 4001</h4>
+<ul>
+  <li>
+  curl -L http://127.0.0.1:4001/v2/keys/ &nbsp&nbsp&nbsp&lt--JSON api way to
+  </li>
+  <li>
+  curl -L http://127.0.0.1:4001/v2/keys/?recursive=true  &nbsp&nbsp&nbsp&lt--recursive call
+  </li>
+  <li>
+  curl -L http://127.0.0.1:4001/version  &nbsp&nbsp&nbsp&lt-- etcd version
+  </li>
+  <li>
+  curl -L http://127.0.0.1:4001/v2/stats/self &nbsp&nbsp&nbsp&lt--stats about machine
+  </li>
+  <li>
+  curl -L http://127.0.0.1:4001/v2/stats/leader &nbsp&nbsp&nbsp&lt--stats about cluster leader
+  </li>
+</ul>
+
+<h4>etcd config port 7001</h4>
+<ul>
+
+  <li>
+  cloud-config
+  </li>
+  <li>
+  etcd -h &nbsp&nbsp&nbsp&lt--display configurable options
+  </li>
+  <li>
+  To include these options in your cloud-config, simply take off the leading dash and separate keys from values with a colon instead of an equal sign. So -peer-addr=<host:port> becomes peer-addr: <host:port>
+  </li>
+  <li>
+  curl -L http://127.0.0.1:7001/v2/admin/config &nbsp&nbsp&nbsp&lt--get config<br />
+    {"activeSize":9,"removeDelay":1800,"syncInterval":5}
+  </li>
+  <li>
+  curl -L http://127.0.0.1:7001/v2/admin/config -XPUT -d '{"activeSize":9,"removeDelay":3600,"syncInterval":4}' &lt--change config
+  </li>
+
+</ul>
+</p>
+
+{% endblock %}}

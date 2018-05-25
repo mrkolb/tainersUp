@@ -1,0 +1,245 @@
+{% extends "results.html" %}
+{% block body %}
+
+<div align="center">
+<h3>Docker administration</h3>
+&nbsp
+</div>
+<div>
+  <table class="table table-striped table-bordered" width="100%">
+    <tr>
+        <th >
+        &nbspImage Mgmt
+        </th>
+        <th >
+
+      </th>
+    </tr>
+    <tr>
+      <td>
+        &nbsp<b>Search Docker HUB</b> for images
+        <form action="/dockerimagesearch" method="POST">
+            &nbsp<input type="text" name="imagetag" value="imageTag">
+            &nbsp<input type="submit" value="Search">
+        </form>
+      </td>
+      <td>
+        &nbsp<b>Pull Docker HUB</b> for image
+        <form action="/dockerimagepull" method="POST">
+            &nbsp<input type="text" name="imagetag" value="imageTag">
+            &nbsp<input type="submit" value="Pull">
+        </form>
+      </td>
+    </tr>
+    <tr>
+    <td>
+      &nbsp<b>Upload Dockerfile</b>
+      <form action="/dockerUpload" method="post" enctype="multipart/form-data">
+          <input type="file" name="file"><br />
+          &nbsp<input type="submit" value="Upload">
+      </form>
+    </td>
+    <td>
+      &nbsp<b>Build docker Image</b> with name
+      <form action="/dockerimagebuild" method="POST">
+          &nbsp<input type="text" name="imagename" value="imageName">
+          &nbsp<input type="submit" value="Build">
+      </form>
+    </td>
+    </tr>
+    <tr>
+      <td>
+        &nbsp<b>Run Container from Image</b> detached
+        <form action="/dockerimagerun" method="POST">
+          &nbsp<input type="text" name="imagename" value="imageName">
+          &nbsp<input type="submit" value="Run">
+        </form>
+      </td>
+      <td>
+        &nbsp<b>Run Container from Image</b> detached with port assignment
+        <form action="/dockerimagerunport" method="POST">
+          &nbsp<input type="text" name="imagename" value="imageName">
+          &nbsp<input type="text" name="containerport" value="port:port">
+          &nbsp<input type="submit" value="Run">
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>
+<hr style="border: 1px solid #4169E1" />​
+<div>
+<table class="table table-striped table-bordered" width="100%"> <!--bootstrap css classes-->
+  <tr>
+      <th >
+      &nbspContainer Mgmt
+      </th>
+      <th >
+
+    </th>
+  </tr>
+  <tr>
+    <td>
+      &nbsp<b>Logs</b> for Container
+      <form action="/dockerContainerLogs" method="POST">
+          &nbsp<input type="text" name="containerNameLogs" value="container_ID">
+          &nbsp<input type="submit" value="Get">
+      </form>
+    </td>
+    <td>
+      &nbsp<b>Start</b> Container
+      <form action="/dockerContainerStart" method="POST">
+          &nbsp<input type="text" name="containerNameStart" value="container_ID">
+          &nbsp<input type="submit" value="Start">
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      &nbsp<b>IP address</b> for Container
+      <form action="/dockerContainerIPaddress" method="POST">
+          &nbsp<input type="text" name="containerIPaddress" value="container_ID">
+          &nbsp<input type="submit" value="Get">
+      </form>
+    </td>
+    <td>
+      &nbsp<b>Stop</b> Container
+      <form action="/dockerContainerStop" method="POST">
+          &nbsp<input type="text" name="containerNameStop" value="container_ID">
+          &nbsp<input type="submit" value="Stop">
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      &nbsp<b>Mounts</b> for Container
+      <form action="/dockerContainerMounts" method="POST">
+          &nbsp<input type="text" name="containerMounts" value="container_ID">
+          &nbsp<input type="submit" value="Get">
+      </form>
+    </td>
+    <td>
+      &nbsp<b>Restart</b> Container
+      <form action="/dockerContainerRestart" method="POST">
+          &nbsp<input type="text" name="containerNameRestart" value="container_ID">
+          &nbsp<input type="submit" value="Restart">
+      </form>
+    </td>
+  </tr>
+</table>
+
+</div>
+<hr style="border: 1px solid #4169E1" />​
+<div>
+  <table class="table table-striped table-bordered" width="100%">
+    <tr>
+        <th >
+        &nbspdocker-compose Mgmt:&nbsp&nbsp  Please use full path to docker-compose.yml e.g. User/docker/ghost
+        </th>
+        <th >
+
+      </th>
+    </tr>
+    <tr>
+    <td>
+      &nbsp<b>Build docker-compose system</b> no-cache
+      <form action="/dockerComposeBuild" method="POST">
+        &nbsp<input type="text" name="composePath" value="full_compose_path">
+        &nbsp<input type="submit" value="Build">
+      </form>
+    </td>
+    <td>
+      &nbsp<b>Run docker-compose system</b> detached
+      <form action="/dockerComposeRun" method="POST">
+        &nbsp<input type="text" name="composePath" value="full_compose_path">
+        &nbsp<input type="submit" value="Up">
+      </form>
+    </td>
+    </tr>
+    <tr>
+      <td>
+        &nbsp<b>Start docker-compose system</b>
+        <form action="/dockerComposeStart" method="POST">
+          &nbsp<input type="text" name="composePath" value="full_compose_path">
+          &nbsp<input type="submit" value="Start">
+        </form>
+      </td>
+      <td>
+        &nbsp<b>Stop docker-compose system</b>
+        <form action="/dockerComposeStop" method="POST">
+          &nbsp<input type="text" name="composePath" value="full_compose_path">
+          &nbsp<input type="submit" value="Stop">
+        </form>
+      </td>
+    </tr>
+    <tr>
+      <td>
+
+      </td>
+      <td>
+
+      </td>
+    </tr>
+  </table>
+</div>
+<hr style="border: 1px solid #4169E1" />​
+<div align="center">
+<h3>Docker Housekeeping</h3>
+&nbsp
+</div>
+<div>
+<table class="table table-striped table-bordered" width="100%"> <!--bootstrap css classes-->
+  <tr >
+      <th >
+      &nbspImage Mgmt
+      </th>
+      <th >
+      &nbspContainer Mgmt
+    </th>
+  </tr>
+  <tr>
+    <td>
+      &nbsp<b>Delete Two</b> Image from host
+      <form action="/dockerimagedelete" method="POST">
+          &nbsp<input type="text" name="repositoryimagetag" value="repository/imagetag">
+          &nbsp<input type="submit" value="Delete">
+      </form>
+    </td>
+    <td>
+      &nbsp<b>Kill All</b> Containers
+      <form action="/dockerContainerKillAll" method="POST">
+          &nbsp<input type="submit" value="Kill">
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      &nbsp<b>Delete All</b> /Untagged/Dangling Images
+      <form action="/dockerImageDanglingDelete" method="POST">
+          &nbsp<input type="submit" value="Delete">
+      </form>
+    </td>
+    <td>
+      &nbsp<b>Delete All Stopped</b> Containers
+      <form action="/dockerContainerDeleteAll" method="POST">
+          &nbsp<input type="submit" value="Delete">
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      &nbsp<b>Delete All</b> Images
+      <form action="/dockerImageAllDelete" method="POST">
+          &nbsp<input type="submit" value="Delete">
+      </form>
+    </td>
+    <td>
+      &nbsp<b>Delete All </b>Unused Volumes
+      <form action="/dockerVolumeAllDelete" method="POST">
+          &nbsp<input type="submit" value="Delete">
+      </form>
+    </td>
+  </tr>
+</table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "partner.html" %}<span></span>
+{% block body %}
+<h3><span class="mw-headline" id="container_access">Issues Mgmt &nbsp;<button type="submit" form="issuecreateform" class="btn btn-success">
+  <i class="inside fas fa-plus-square"></i> Create Issue
+</button></span></h3>
+<form action="/issuepartnercreate" method="POST" id="issuecreateform">
+  <input type="hidden" name="username" value=username />
+  <input type="hidden" name="partner" value=partner />
+</form>
+
+<table class="table table-bordered table-striped ">
+  <tr>
+    <th>
+
+    </th>
+    <th>
+      Issue ID
+    </th>
+    <th>
+      Issue Requestor
+    </th>
+    <th>
+      Issue Description
+    </th>
+    <th>
+      Actions Taken
+    </th>
+    <th>
+      Service
+    </th>
+    <th>
+      Resolved
+    </th>
+    <th>
+
+    </th>
+  </tr>
+  {% for dict_item in partner_list | sort(attribute='issue_id') %}
+  <tr>
+    <td>
+      <form action="/issuepartneredit" method="POST" id="issueform{{loop.index}}">
+        <input type="hidden" name="issue_id" value={{ dict_item['issue_id'] }} />
+      </form>
+
+      <button type="submit" form="issueform{{loop.index}}" class="btn btn-success">
+        <i class="inside fa fa-edit"></i> Edit
+      </button>
+    </td>
+    <td>{{ dict_item['issue_id'] }}</td>
+    <td>{{ dict_item['issueRequestor'] }}</td>
+    <td>{{ dict_item['issueDescription'] }}</td>
+    <td>{{ dict_item['Actions'] }}</td>
+    <td>{{ dict_item['service'] }}</td>
+    <td>
+      {% if dict_item['resolved'] == 1 %}
+      Yes
+      {% else %}
+      No
+      {% endif %}
+    </td>
+    <td>
+      <form action="/issuepartnerdelete" method="POST" id="issueformdel{{loop.index}}">
+        <input type="hidden" name="issue_id" value={{ dict_item['issue_id'] }} />
+      </form>
+
+      <button type="submit" form="issueformdel{{loop.index}}" class="btn btn-success">
+        <i class="inside fas fa-trash-alt"></i> Delete
+      </button>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+
+{% endblock %}
